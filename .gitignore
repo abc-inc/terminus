@@ -1,0 +1,20 @@
+### Go
+*.test
+*.out
+
+### JetBrains
+.idea/
+out/
+*.iml
+*.ipr
+*.iws
+
+### VisualStudioCode
+.vscode/
+
+### misc
+*.tmp
+
+### app
+terminus
+terminus.*
