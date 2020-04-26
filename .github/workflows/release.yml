@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    name: Release Go binaries
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows, darwin]
+        goarch: [amd64]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set APP_VERSION env
+        run: echo ::set-env name=APP_VERSION::$(echo ${GITHUB_REF##*/v})
+      - uses: BjoernSchilberg/go-release-action@be97452
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          build_flags: -trimpath -v
+          ldflags: -s -w -X "main.version=${{ env.APP_VERSION }}"
