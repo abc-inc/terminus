@@ -55,3 +55,25 @@ func TestGetParams(t *testing.T) {
 	EqualValues(t, "192.168.0.0", fmt.Sprint(m[iface.Network]))
 	EqualValues(t, "4", fmt.Sprint(m[iface.Version]))
 }
+
+func TestFindInterface(t *testing.T) {
+	is, _ := net.Interfaces()
+	ns := []string{}
+	for _, i := range is {
+		ns = append(ns, i.Name)
+	}
+
+	ip, n, _ := net.ParseCIDR("127.0.0.1/8")
+	m := iface.GetParams(ip.String(), ip, n.Mask)
+	Equal(t, ip, m[iface.IP])
+	NotEmpty(t, m[iface.Name])
+	NotEqual(t, ip.String(), m[iface.Name])
+	Contains(t, ns, m[iface.Name])
+}
+
+func TestFindInterfaceNotExists(t *testing.T) {
+	ip, n, _ := net.ParseCIDR("127.255.255.255/8")
+	m := iface.GetParams(ip.String(), ip, n.Mask)
+	Equal(t, ip, m[iface.IP])
+	Empty(t, m[iface.Name])
+}

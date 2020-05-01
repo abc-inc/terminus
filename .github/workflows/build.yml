@@ -34,8 +34,8 @@ jobs:
       - name: Set up golangci-lint
         uses: nickhstr/action-setup-golangci-lint@v0.1.0
         with:
-          version: 1.25.0
+          version: 1.26.0
       - name: Run golangci-lint
         run: |
           bin="$(find /home/runner/work -name golangci-lint)"
-          "${bin}" run --enable-all --disable gochecknoglobals,goimports,gomnd,lll,wsl
+          "${bin}" run --enable-all --disable gochecknoglobals,goerr113,goimports,gomnd,lll,testpackage,wsl

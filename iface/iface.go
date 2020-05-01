@@ -50,6 +50,8 @@ const (
 	Wildcard = "wildcard"
 )
 
+var errNoIP = errors.New("no IP address")
+
 // GetAddr returns the first IPv4 unicast address for the interface specified by name.
 func GetAddr(name string) (ip net.IP, n iplib.Net, err error) {
 	i, err := net.InterfaceByName(name)
@@ -67,7 +69,7 @@ func GetAddr(name string) (ip net.IP, n iplib.Net, err error) {
 			}
 		}
 	}
-	return ip, n, errors.New("no IP address")
+	return ip, n, errNoIP
 }
 
 // GetParams returns the parameters for the specified IP.
@@ -103,12 +105,12 @@ func GetParams(name string, ip net.IP, mask net.IPMask) (m map[string]interface{
 }
 
 func findInterface(ip net.IP) string {
-	ifs, err := net.Interfaces()
+	is, err := net.Interfaces()
 	if err != nil {
 		return ""
 	}
 
-	for _, i := range ifs {
+	for _, i := range is {
 		addrs, err := i.Addrs()
 		if err != nil {
 			continue
