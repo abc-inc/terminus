@@ -18,13 +18,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/abc-inc/terminus/iface"
-	. "github.com/stretchr/testify/require"
 	"math"
 	"net"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/abc-inc/terminus/iface"
+	. "github.com/stretchr/testify/require"
 )
 
 func TestPrintTemplate(t *testing.T) {

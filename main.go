@@ -19,11 +19,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/abc-inc/terminus/iface"
-	"github.com/c-robinson/iplib"
-	"github.com/kballard/go-shellquote"
-	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 	"io"
 	"io/ioutil"
 	"log"
@@ -32,6 +27,12 @@ import (
 	"sort"
 	"strings"
 	"text/template"
+
+	"github.com/abc-inc/terminus/iface"
+	"github.com/c-robinson/iplib"
+	"github.com/kballard/go-shellquote"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 var version = "0"
@@ -43,7 +44,8 @@ var rootCmd = &cobra.Command{
   terminus [-L | --list-interfaces]`,
 	Short: "terminus is an IP subnet address calculator.",
 	Long: `terminus is an IP subnet address calculator.
-For a given IPv4 address (and optional prefix length), it calculates network address, broadcast address, maximum number of hosts, etc.`,
+For a given IPv4 address (and optional prefix length), ` +
+		`it calculates network address, broadcast address, maximum number of hosts, etc.`,
 	Run: runRootCmd,
 	Example: `  terminus -i eth0                # 172.16.57.200
   terminus -p 10.0.0.138          # 8

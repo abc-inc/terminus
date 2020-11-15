@@ -18,9 +18,10 @@ package iface
 
 import (
 	"errors"
-	"github.com/c-robinson/iplib"
 	"net"
 	"strings"
+
+	"github.com/c-robinson/iplib"
 )
 
 const (

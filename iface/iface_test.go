@@ -18,10 +18,11 @@ package iface_test
 
 import (
 	"fmt"
-	"github.com/abc-inc/terminus/iface"
-	. "github.com/stretchr/testify/require"
 	"net"
 	"testing"
+
+	"github.com/abc-inc/terminus/iface"
+	. "github.com/stretchr/testify/require"
 )
 
 func TestGetAddr(t *testing.T) {

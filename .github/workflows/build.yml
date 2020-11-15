@@ -14,11 +14,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.14
-      - name: Check out code
+          go-version: 1.15
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Cache Go modules
-        uses: actions/cache@v1.1.2
+        uses: actions/cache@v2
         with:
           path: ~/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
@@ -26,16 +26,20 @@ jobs:
             ${{ runner.OS }}-go-
             ${{ runner.OS }}-
       - name: Get dependencies
-        run: go get -v -t -d ./...
+        run: go get -d -t -v ./...
       - name: Build
-        run: go build -v .
+        run: |
+          mkdir -p bin
+          go build -trimpath -o bin/ ./...
       - name: Test
         run: go test ./...
-      - name: Set up golangci-lint
-        uses: nickhstr/action-setup-golangci-lint@v0.1.0
+  golangci:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
         with:
-          version: 1.26.0
-      - name: Run golangci-lint
-        run: |
-          bin="$(find /home/runner/work -name golangci-lint)"
-          "${bin}" run --enable-all --disable gochecknoglobals,goerr113,goimports,gomnd,lll,testpackage,wsl
+          version: v1.32
