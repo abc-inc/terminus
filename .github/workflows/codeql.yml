@@ -1,4 +1,4 @@
-name: Build
+name: Code Scanning
 
 on:
   push:
@@ -13,8 +13,10 @@ on:
       - "**.go"
       - go.mod
       - go.sum
+  schedule:
+    - cron: "50 4 15 * *"
 
 jobs:
-  build:
-    name: Build
-    uses: abc-inc/gh-actions-go-workflows/.github/workflows/build.yml@master
+  CodeQL-Build:
+    name: Analyze
+    uses: abc-inc/gh-actions-go-workflows/.github/workflows/codeql.yml@master

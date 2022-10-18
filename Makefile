@@ -13,7 +13,7 @@ tmpdir = tmp
 
 all: test build
 
-build: check
+build:
 	@mkdir -p "$(builddir)"
 	go build $(GOFLAGS) -ldflags "$(LDFLAGS)" -o "$(builddir)/" ./...
 
@@ -33,7 +33,7 @@ install: all
 install-strip:
 	$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
 
-test: check
+test:
 	@mkdir -p "$(tmpdir)/reports"
 	go test $(GOFLAGS) -ldflags "$(LDFLAGS)" -coverprofile "$(tmpdir)/reports/coverage.out" ./...
 	go tool cover -html "$(tmpdir)/reports/coverage.out" -o "$(tmpdir)/reports/coverage.html"

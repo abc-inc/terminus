@@ -1,20 +1,20 @@
-archives:
-  - builds:
-      - default
-    format: binary
-    name_template: "{{ .Binary }}-{{ .Version }}-{{ .Os }}_{{ .Arch }}"
-
-builds:
-  - id: "default"
-    flags:
-      - -trimpath
-    goos:
-      - darwin
-      - linux
-      - windows
-    goarch:
-      - amd64
-    mod_timestamp: "{{ .CommitTimestamp }}"
-
 env:
   - CGO_ENABLED=0
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: default
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - windows_amd64
+
+archives:
+  - id: default
+    format: binary
+    replacements:
+      darwin: macOS
